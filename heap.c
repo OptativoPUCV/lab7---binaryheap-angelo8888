@@ -29,9 +29,40 @@ void* heap_top(Heap* pq) {
 
 
 
-void heap_push(Heap* pq, void* data, int priority){
+void heap_push(Heap* pq, void* data, int priority) {
+    if (pq == NULL) {
+        exit(1);
+    }
+    
+    //aumentar capacidad del arreglo si es necesario
+    if (pq->size == pq->capac) {
+        pq->capac = pq->capac * 2 + 1;
+        pq->heapArray = (heapElem*)realloc(pq->heapArray, pq->capac * sizeof(heapElem));
+        if (pq->heapArray == NULL) {
+            exit(1);
+        }
+    }
+    
+    // Insertar el nuevo dato al final del arreglo
+    int index = pq->size;
+    pq->heapArray[index].data = data;
+    pq->heapArray[index].priority = priority;
+    pq->size++;
 
+   
+    while (index > 0) {
+        int parentIndex = (index - 1) / 2;
+        if (pq->heapArray[index].priority > pq->heapArray[parentIndex].priority) {
+            heapElem temp = pq->heapArray[index];
+            pq->heapArray[index] = pq->heapArray[parentIndex];
+            pq->heapArray[parentIndex] = temp;
+        } else {
+            break;
+        }
+        index = parentIndex;
+    }
 }
+
 
 
 void heap_pop(Heap* pq){
