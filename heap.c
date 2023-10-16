@@ -34,19 +34,19 @@ void heap_pop(Heap* pq){
 
 
 Heap* createHeap() {
-  Heap* newHeap = (Heap*)malloc(sizeof(Heap));
-  if (newHeap == NULL) {
-      return;
-  }
+    Heap* newHeap = (Heap*)malloc(sizeof(Heap));
+    if (newHeap == NULL) {
+        exit(1);
+    }
 
-  newHeap->heapArray = (heapElem*)malloc(3 * sizeof(heapElem));
-  if (newHeap->heapArray == NULL) {
-      free(newHeap);
-      return;
-  }
+    newHeap->heapArray = (heapElem*)malloc(3 * sizeof(heapElem));  // Reserva memoria para el arreglo heapArray
+    if (newHeap->heapArray == NULL) {
+        free(newHeap);
+        exit(1);
+    }
 
-  newHeap->size = 0;
-  newHeap->capac = 3;
+    newHeap->size = 0;
+    newHeap->capac = 3;
 
-  return newHeap;
-  }
+    return newHeap;
+}
